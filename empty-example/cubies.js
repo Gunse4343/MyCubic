@@ -9,6 +9,7 @@ class CUBIE {
     ]);
     this.init = this.pos;
     this.halfSize = _size / 2;
+    this.setIndex();
   }
 
   update(matrix) {
@@ -17,13 +18,18 @@ class CUBIE {
   }
 
   getIndex(axis) {
+    return this.index[axis];
+  }
+
+  setIndex() {
     let test = math.matrix([0, 0, 0, 1 / (this.halfSize * 2)]);
-    return math.round(math.multiply(this.pos, test)._data)[axis];
+    this.index = math.round(math.multiply(this.init, test)._data);
   }
 
   endAnimation(matrix) {
     this.update(matrix);
     this.init = this.pos;
+    this.setIndex();
   }
 
   show() {

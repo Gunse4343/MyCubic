@@ -16,10 +16,10 @@ function setup() {
       }
     }
   }
-  tx = 1;
-  ty = -1;
-  tz = 1;
-  cube[tx][ty][tz] = new CUBIE(cubeSize * 1.2, tx, ty, tz);
+  tx = -1;
+  ty = 0;
+  tz = 0;
+  //cube[tx][ty][tz] = new CUBIE(cubeSize * 1.2, tx, ty, tz);
 }
 
 function keyPressed() {
@@ -39,11 +39,6 @@ function keyPressed() {
       animation = setInterval(zAxisRotation, 25, 1);
     }
   }
-}
-
-function doTest() {
-  test = math.matrix([0, 0, 0, 1 / cubeSize]);
-  console.log(math.round(math.multiply(cube[tx][ty][tz].pos, test)._data));
 }
 
 function axisRotation(newPos, axis, layer) {
@@ -70,61 +65,13 @@ function xAxisRotation(direction) {
   deg = deg + direction * 5;
 
   let rad = radians(deg);
-  newPos = math.matrix([
+  let newPos = math.matrix([
     [1, 0, 0, 0],
     [0, cos(rad), sin(rad), 0],
     [0, -sin(rad), cos(rad), 0],
     [0, 0, 0, 1],
   ]);
-  for (let x = -1; x < 2; x++) {
-    for (let y = -1; y < 2; y++) {
-      for (let z = -1; z < 2; z++) {
-        if (cube[x][y][z].getIndex(0) == 1) {
-          if (abs(deg) < 90) {
-            cube[x][y][z].update(newPos);
-          } else {
-            cube[x][y][z].endAnimation(newPos);
-          }
-        }
-      }
-    }
-  }
-  if (abs(deg) >= 90) {
-    console.log(cube[tx][ty][tz].getIndex());
-    clearInterval(animation);
-    animation = null;
-  }
-}
-
-function zAxisRotation(direction) {
-  deg = deg + direction * 5;
-
-  let rad = radians(deg);
-  // Z-Axis rotation
-  newPos = math.matrix([
-    [cos(rad), sin(rad), 0, 0],
-    [-sin(rad), cos(rad), 0, 0],
-    [0, 0, 1, 0],
-    [0, 0, 0, 1],
-  ]);
-  for (let x = -1; x < 2; x++) {
-    for (let y = -1; y < 2; y++) {
-      for (let z = -1; z < 2; z++) {
-        if (cube[x][y][z].getIndex(2) == 1) {
-          if (abs(deg) < 90) {
-            cube[x][y][z].update(newPos);
-          } else {
-            cube[x][y][z].endAnimation(newPos);
-          }
-        }
-      }
-    }
-  }
-  if (abs(deg) >= 90) {
-    console.log(cube[tx][ty][tz].getIndex());
-    clearInterval(animation);
-    animation = null;
-  }
+  axisRotation(newPos, 0, tx);
 }
 
 function yAxisRotation(direction) {
@@ -132,30 +79,28 @@ function yAxisRotation(direction) {
 
   let rad = radians(deg);
   // Y-Axis rotation
-  newPos = math.matrix([
+  let newPos = math.matrix([
     [cos(rad), 0, sin(rad), 0],
     [0, 1, 0, 0],
     [-sin(rad), 0, cos(rad), 0],
     [0, 0, 0, 1],
   ]);
-  for (let x = -1; x < 2; x++) {
-    for (let y = -1; y < 2; y++) {
-      for (let z = -1; z < 2; z++) {
-        if (cube[x][y][z].getIndex(1) == 1) {
-          if (abs(deg) < 90) {
-            cube[x][y][z].update(newPos);
-          } else {
-            cube[x][y][z].endAnimation(newPos);
-          }
-        }
-      }
-    }
-  }
-  if (abs(deg) >= 90) {
-    console.log(cube[tx][ty][tz].getIndex());
-    clearInterval(animation);
-    animation = null;
-  }
+
+  axisRotation(newPos, 1, ty);
+}
+
+function zAxisRotation(direction) {
+  deg = deg + direction * 5;
+
+  let rad = radians(deg);
+  // Z-Axis rotation
+  let newPos = math.matrix([
+    [cos(rad), sin(rad), 0, 0],
+    [-sin(rad), cos(rad), 0, 0],
+    [0, 0, 1, 0],
+    [0, 0, 0, 1],
+  ]);
+  axisRotation(newPos, 2, tz);
 }
 
 function draw() {
