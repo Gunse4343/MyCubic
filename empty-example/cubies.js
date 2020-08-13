@@ -16,10 +16,9 @@ class CUBIE {
     this.pos = math.inv(math.multiply(origin, matrix));
   }
 
-  getIndex() {
-    let test = math.matrix([0, 0, 0, 1 / (2 * this.halfSize)]);
-    test = math.round(math.multiply(this.init, test));
-    return [test._data[0], test._data[1], test._data[2]];
+  getIndex(axis) {
+    let test = math.matrix([0, 0, 0, 1 / (this.halfSize * 2)]);
+    return math.round(math.multiply(this.pos, test)._data)[axis];
   }
 
   endAnimation(matrix) {
@@ -49,7 +48,7 @@ class CUBIE {
     );
     //translate(this.loc);
     beginShape();
-    fill("red");
+    fill('red');
     vertex(this.halfSize, this.halfSize, this.halfSize);
     vertex(this.halfSize, -this.halfSize, this.halfSize);
     vertex(-this.halfSize, -this.halfSize, this.halfSize);
@@ -57,7 +56,7 @@ class CUBIE {
     endShape();
 
     beginShape();
-    fill("orange");
+    fill('orange');
     vertex(this.halfSize, this.halfSize, -this.halfSize);
     vertex(this.halfSize, -this.halfSize, -this.halfSize);
     vertex(-this.halfSize, -this.halfSize, -this.halfSize);
@@ -65,7 +64,7 @@ class CUBIE {
     endShape();
 
     beginShape();
-    fill("green");
+    fill('green');
     vertex(this.halfSize, -this.halfSize, this.halfSize);
     vertex(this.halfSize, -this.halfSize, -this.halfSize);
     vertex(this.halfSize, this.halfSize, -this.halfSize);
@@ -73,7 +72,7 @@ class CUBIE {
     endShape();
 
     beginShape();
-    fill("blue");
+    fill('blue');
     vertex(-this.halfSize, -this.halfSize, this.halfSize);
     vertex(-this.halfSize, -this.halfSize, -this.halfSize);
     vertex(-this.halfSize, this.halfSize, -this.halfSize);
@@ -81,7 +80,7 @@ class CUBIE {
     endShape();
 
     beginShape();
-    fill("white");
+    fill('white');
     vertex(-this.halfSize, this.halfSize, this.halfSize);
     vertex(-this.halfSize, this.halfSize, -this.halfSize);
     vertex(this.halfSize, this.halfSize, -this.halfSize);
@@ -89,7 +88,7 @@ class CUBIE {
     endShape();
 
     beginShape();
-    fill("yellow");
+    fill('yellow');
     vertex(-this.halfSize, -this.halfSize, this.halfSize);
     vertex(-this.halfSize, -this.halfSize, -this.halfSize);
     vertex(this.halfSize, -this.halfSize, -this.halfSize);
